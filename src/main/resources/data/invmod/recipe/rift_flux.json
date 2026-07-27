@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["XXX", "XXX", "XXX"],
+  "key": {"X": {"item": "invmod:small_remnants"}},
+  "result": {"id": "invmod:rift_flux", "count": 1}
+}

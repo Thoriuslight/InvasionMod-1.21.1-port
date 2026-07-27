@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [{"item": "invmod:rift_flux"}],
+  "result": {"id": "minecraft:iron_ingot", "count": 4}
+}

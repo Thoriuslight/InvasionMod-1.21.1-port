@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "minecraft:string", "functions": [{"function": "minecraft:set_count", "count": {"min": 0, "max": 2}}]}]},
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "minecraft:spider_eye", "functions": [{"function": "minecraft:set_count", "count": {"min": 0, "max": 1}}]}], "conditions": [{"condition": "minecraft:killed_by_player"}, {"condition": "minecraft:random_chance", "chance": 0.33}]}
+  ]
+}

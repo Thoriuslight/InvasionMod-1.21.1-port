@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" X ", "X#X", " X "],
+  "key": {
+    "X": {"item": "minecraft:iron_ingot"},
+    "#": {"item": "invmod:rift_flux"}
+  },
+  "result": {"id": "invmod:empty_trap", "count": 1}
+}

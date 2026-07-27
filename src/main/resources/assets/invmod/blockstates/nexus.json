@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=false": { "model": "invmod:block/nexus_off" },
+    "lit=true":  { "model": "invmod:block/nexus_on"  }
+  }
+}

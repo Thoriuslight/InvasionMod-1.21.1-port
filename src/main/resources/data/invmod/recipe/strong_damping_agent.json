@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["   ", "XXX", "   "],
+  "key": {"X": {"item": "invmod:damping_agent"}},
+  "result": {"id": "invmod:strong_damping_agent", "count": 1}
+}

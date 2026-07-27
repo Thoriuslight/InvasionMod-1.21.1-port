@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" X ", " X ", " X "],
+  "key": {"X": {"item": "invmod:rift_flux"}},
+  "result": {"id": "minecraft:diamond", "count": 1}
+}

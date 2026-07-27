@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "minecraft:feather", "functions": [{"function": "minecraft:set_count", "count": {"min": 2, "max": 5}}]}]},
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "invmod:phase_crystal"}], "conditions": [{"condition": "minecraft:random_chance", "chance": 0.10}]},
+    {"rolls": 1, "entries": [{"type": "minecraft:item", "name": "invmod:rift_flux"}], "conditions": [{"condition": "minecraft:random_chance", "chance": 0.25}]}
+  ]
+}
