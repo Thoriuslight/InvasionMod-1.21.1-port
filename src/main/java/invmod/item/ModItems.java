@@ -1,13 +1,11 @@
-package invmod;
+package invmod.item;
 
-import invmod.item.DebugWandItem;
-import invmod.item.EngyHammerItem;
-import invmod.item.InfusedSwordItem;
-import invmod.item.ProbeItem;
-import invmod.item.SearingBowItem;
+import invmod.InvasionMod;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Phase-B port: all original Invasion-Mod items registered as plain {@link Item}
@@ -16,10 +14,16 @@ import net.neoforged.neoforge.registries.DeferredItem;
  * dedicated subclasses (sword, bow, probe, trap, etc.).
  */
 public final class ModItems {
-    private ModItems() {}
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(InvasionMod.MODID);
+
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+    }
+
+
 
     private static final DeferredItem<Item> register(String id, Item.Properties props) {
-        return InvasionMod.ITEMS.registerSimpleItem(id, props);
+        return ITEMS.registerSimpleItem(id, props);
     }
 
     private static Item.Properties single() { return new Item.Properties().stacksTo(1); }
@@ -40,24 +44,20 @@ public final class ModItems {
     public static final DeferredItem<Item> SMALL_REMNANTS         = register("small_remnants",         stack().stacksTo(64));
 
     // Tools / weapons
-    public static final DeferredItem<InfusedSwordItem> INFUSED_SWORD = InvasionMod.ITEMS.register(
+    public static final DeferredItem<InfusedSwordItem> INFUSED_SWORD = ITEMS.register(
             "infused_sword", () -> new InfusedSwordItem(single().durability(250).rarity(Rarity.RARE)));
-    public static final DeferredItem<SearingBowItem> SEARING_BOW = InvasionMod.ITEMS.register(
+    public static final DeferredItem<SearingBowItem> SEARING_BOW = ITEMS.register(
             "searing_bow", () -> new SearingBowItem(single().durability(384).rarity(Rarity.RARE)));
-    public static final DeferredItem<EngyHammerItem> ENGY_HAMMER = InvasionMod.ITEMS.register(
+    public static final DeferredItem<EngyHammerItem> ENGY_HAMMER = ITEMS.register(
             "engy_hammer", () -> new EngyHammerItem(single().durability(128)));
     public static final DeferredItem<Item> NEXUS_ADJUSTER         = register("nexus_adjuster",         single());
-    public static final DeferredItem<ProbeItem> MATERIAL_PROBE = InvasionMod.ITEMS.register(
-            "material_probe", () -> new ProbeItem(single()));
-    public static final DeferredItem<DebugWandItem> DEBUG_WAND = InvasionMod.ITEMS.register(
+    public static final DeferredItem<ProbeItem> MATERIAL_PROBE = ITEMS.register(
+            "material_probe", () -> new ProbeItem(single(), true));
+    public static final DeferredItem<DebugWandItem> DEBUG_WAND = ITEMS.register(
             "debug_wand", () -> new DebugWandItem(single().rarity(Rarity.EPIC)));
 
     // Trap variants — split into 3 distinct items (cleaner than NBT-discriminated 1.7.2 layout)
     public static final DeferredItem<Item> EMPTY_TRAP             = register("empty_trap",             single());
     public static final DeferredItem<Item> RIFT_TRAP              = register("rift_trap",              single());
     public static final DeferredItem<Item> FLAME_TRAP             = register("flame_trap",             single());
-
-    static void touch() {
-        // Force class init so static fields register with DeferredItems
-    }
 }

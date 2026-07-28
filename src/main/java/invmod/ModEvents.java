@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 public final class ModEvents {
     private ModEvents() {}
 
-    @EventBusSubscriber(modid = InvasionMod.MODID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = InvasionMod.MODID)
     public static final class ModBus {
         @SubscribeEvent
         public static void onAttributeCreation(EntityAttributeCreationEvent event) {
@@ -29,7 +29,7 @@ public final class ModEvents {
         }
     }
 
-    @EventBusSubscriber(modid = InvasionMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = InvasionMod.MODID)
     public static final class GameBus {
         @SubscribeEvent
         public static void onRegisterCommands(RegisterCommandsEvent event) {

@@ -1,5 +1,7 @@
 package invmod;
 
+import invmod.block.ModBlocks;
+import invmod.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 
 public final class ModRegistry {
@@ -7,16 +9,14 @@ public final class ModRegistry {
 
     static void bootstrap() {
         // Force class-init of every per-domain registrar so its DeferredHolders attach.
-        ModBlocks.touch();
         ModBlockEntities.touch();
-        ModItems.touch();
         ModEntities.touch();
         ModMenus.touch();
     }
 
-    static void populateCreativeTab(CreativeModeTab.Output output) {
+    public static void populateCreativeTab(CreativeModeTab.Output output) {
         // Block items
-        output.accept(ModBlocks.NEXUS_ITEM);
+        output.accept(ModBlocks.NEXUS);
         // Spawn eggs
         output.accept(ModEntities.IM_ZOMBIE_SPAWN_EGG);
         output.accept(ModEntities.IM_SKELETON_SPAWN_EGG);

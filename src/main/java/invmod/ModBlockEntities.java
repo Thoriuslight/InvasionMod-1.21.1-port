@@ -1,5 +1,6 @@
 package invmod;
 
+import invmod.block.ModBlocks;
 import invmod.block.entity.NexusBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;

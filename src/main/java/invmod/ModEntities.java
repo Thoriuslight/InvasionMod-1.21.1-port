@@ -1,6 +1,7 @@
 package invmod;
 
 import invmod.entity.*;
+import invmod.item.ModItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -24,7 +25,7 @@ public final class ModEntities {
     }
 
     private static DeferredItem<Item> egg(String id, Supplier<? extends EntityType<? extends net.minecraft.world.entity.Mob>> type, int primary, int secondary) {
-        return InvasionMod.ITEMS.register(id, () -> new DeferredSpawnEggItem(type, primary, secondary, new Item.Properties()));
+        return ModItems.ITEMS.register(id, () -> new DeferredSpawnEggItem(type, primary, secondary, new Item.Properties()));
     }
 
     public static final DeferredHolder<EntityType<?>, EntityType<IMZombieEntity>> IM_ZOMBIE =

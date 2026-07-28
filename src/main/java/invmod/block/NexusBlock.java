@@ -2,7 +2,7 @@ package invmod.block;
 
 import com.mojang.serialization.MapCodec;
 import invmod.ModBlockEntities;
-import invmod.ModItems;
+import invmod.item.ModItems;
 import invmod.block.entity.NexusBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,19 +25,27 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class NexusBlock extends BaseEntityBlock {
-    public static final BooleanProperty ACTIVE = BlockStateProperties.LIT;
     public static final MapCodec<NexusBlock> CODEC = simpleCodec(NexusBlock::new);
+    public static final BooleanProperty ACTIVE = BlockStateProperties.LIT;
+
 
     public NexusBlock(Properties props) {
         super(props);
         this.registerDefaultState(this.stateDefinition.any().setValue(ACTIVE, false));
     }
+    @Override
+    protected @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+        return RenderShape.MODEL;
+    }
 
     @Override
-    protected MapCodec<NexusBlock> codec() { return CODEC; }
+    protected @NotNull MapCodec<NexusBlock> codec() {
+        return CODEC;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
@@ -45,7 +53,7 @@ public final class NexusBlock extends BaseEntityBlock {
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new NexusBlockEntity(pos, state);
     }
 
@@ -57,11 +65,8 @@ public final class NexusBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
-
-    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (!Boolean.TRUE.equals(state.getValue(ACTIVE))) return;
+        if (!state.getValue(ACTIVE)) return;
         for (int i = 0; i < 4; i++) {
             double x = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.6;
             double y = pos.getY() + 1.05 + random.nextDouble() * 0.3;

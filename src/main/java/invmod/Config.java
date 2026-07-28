@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * {@code invasion_config.cfg}. Values are read lazily by other systems
  * (block strength, wave size scaling, mob HP scaling).
  */
-@EventBusSubscriber(modid = InvasionMod.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = InvasionMod.MODID)
 public final class Config {
     private Config() {}
 

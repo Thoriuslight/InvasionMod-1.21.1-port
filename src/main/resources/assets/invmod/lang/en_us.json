@@ -41,5 +41,7 @@
   "entity.invmod.im_trap": "Trap",
   "entity.invmod.im_bolt": "Bolt",
   "entity.invmod.im_primed_tnt": "Primed TNT",
-  "entity.invmod.im_spawn_proxy": "Spawn Proxy"
+  "entity.invmod.im_spawn_proxy": "Spawn Proxy",
+
+  "message.invmod.probe.blockstrength": "Block strength: %s"
 }
