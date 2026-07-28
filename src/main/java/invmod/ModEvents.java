@@ -18,7 +18,7 @@ public final class ModEvents {
         event.put(ModEntities.IM_SPIDER.get(),        IMSpiderEntity.createAttributes().build());
         event.put(ModEntities.IM_CREEPER.get(),       IMCreeperEntity.createAttributes().build());
         event.put(ModEntities.IM_ZOMBIE_PIGMAN.get(), IMZombiePigmanEntity.createAttributes().build());
-        event.put(ModEntities.IM_PIG_ENGY.get(),      IMPigEngyEntity.createAttributes().build());
+        event.put(ModEntities.IM_PIGMAN_ENGINEER.get(),      IMPigEngyEntity.createAttributes().build());
         event.put(ModEntities.IM_THROWER.get(),       IMThrowerEntity.createAttributes().build());
         event.put(ModEntities.IM_BURROWER.get(),      IMBurrowerEntity.createAttributes().build());
         event.put(ModEntities.IM_IMP.get(),           IMImpEntity.createAttributes().build());

@@ -34,11 +34,15 @@ public final class ModEntities {
             reg("im_skeleton",      MobCategory.MONSTER, IMSkeletonEntity::new,      0.6f, 1.99f);
     public static final DeferredHolder<EntityType<?>, EntityType<IMSpiderEntity>> IM_SPIDER =
             reg("im_spider",        MobCategory.MONSTER, IMSpiderEntity::new,        1.4f, 0.9f);
+    public static final DeferredHolder<EntityType<?>, EntityType<IMSpiderEntity>> IM_JUMPING_SPIDER =
+            reg("im_jumping_spider",        MobCategory.MONSTER, IMSpiderEntity::new,        1.4f, 0.9f);
+    public static final DeferredHolder<EntityType<?>, EntityType<IMSpiderEntity>> IM_QUEEN_SPIDER =
+            reg("im_queen_spider",        MobCategory.MONSTER, IMSpiderEntity::new,        1.4f, 0.9f);
     public static final DeferredHolder<EntityType<?>, EntityType<IMCreeperEntity>> IM_CREEPER =
             reg("im_creeper",       MobCategory.MONSTER, IMCreeperEntity::new,       0.6f, 1.7f);
     public static final DeferredHolder<EntityType<?>, EntityType<IMZombiePigmanEntity>> IM_ZOMBIE_PIGMAN =
             reg("im_zombie_pigman", MobCategory.MONSTER, IMZombiePigmanEntity::new,  0.6f, 1.95f);
-    public static final DeferredHolder<EntityType<?>, EntityType<IMPigEngyEntity>> IM_PIG_ENGY =
+    public static final DeferredHolder<EntityType<?>, EntityType<IMPigEngyEntity>> IM_PIGMAN_ENGINEER =
             reg("im_pig_engy",      MobCategory.MONSTER, IMPigEngyEntity::new,       0.6f, 1.95f);
     public static final DeferredHolder<EntityType<?>, EntityType<IMThrowerEntity>> IM_THROWER =
             reg("im_thrower",       MobCategory.MONSTER, IMThrowerEntity::new,       0.9f, 2.5f);
@@ -67,7 +71,7 @@ public final class ModEntities {
     public static final DeferredItem<Item> IM_SPIDER_SPAWN_EGG        = egg("im_spider_spawn_egg",        IM_SPIDER,        0x342D27, 0xA80E0E);
     public static final DeferredItem<Item> IM_CREEPER_SPAWN_EGG       = egg("im_creeper_spawn_egg",       IM_CREEPER,       0x0DA70B, 0x000000);
     public static final DeferredItem<Item> IM_ZOMBIE_PIGMAN_SPAWN_EGG = egg("im_zombie_pigman_spawn_egg", IM_ZOMBIE_PIGMAN, 0xEA9393, 0x4C7129);
-    public static final DeferredItem<Item> IM_PIG_ENGY_SPAWN_EGG      = egg("im_pig_engy_spawn_egg",      IM_PIG_ENGY,      0xC09090, 0x947050);
+    public static final DeferredItem<Item> IM_PIG_ENGY_SPAWN_EGG      = egg("im_pig_engy_spawn_egg",      IM_PIGMAN_ENGINEER,      0xC09090, 0x947050);
     public static final DeferredItem<Item> IM_THROWER_SPAWN_EGG       = egg("im_thrower_spawn_egg",       IM_THROWER,       0x223300, 0x666600);
     public static final DeferredItem<Item> IM_BURROWER_SPAWN_EGG      = egg("im_burrower_spawn_egg",      IM_BURROWER,      0x553311, 0x8B5A2B);
     public static final DeferredItem<Item> IM_IMP_SPAWN_EGG           = egg("im_imp_spawn_egg",           IM_IMP,           0xFF3300, 0xFFCC00);

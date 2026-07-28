@@ -38,7 +38,7 @@ public final class InvasionModClient {
         event.registerEntityRenderer(ModEntities.IM_SPIDER.get(),        IMRenderers.IMSpider::new);
         event.registerEntityRenderer(ModEntities.IM_CREEPER.get(),       IMRenderers.IMCreeper::new);
         event.registerEntityRenderer(ModEntities.IM_ZOMBIE_PIGMAN.get(), IMRenderers.IMZombiePigman::new);
-        event.registerEntityRenderer(ModEntities.IM_PIG_ENGY.get(),      IMRenderers.IMPigEngy::new);
+        event.registerEntityRenderer(ModEntities.IM_PIGMAN_ENGINEER.get(),      IMRenderers.IMPigEngy::new);
         event.registerEntityRenderer(ModEntities.IM_THROWER.get(),       IMCustomRenderers.IMThrowerRenderer::new);
         event.registerEntityRenderer(ModEntities.IM_BURROWER.get(),      IMCustomRenderers.IMBurrowerRenderer::new);
         event.registerEntityRenderer(ModEntities.IM_WOLF.get(),          IMRenderers.IMWolf::new);

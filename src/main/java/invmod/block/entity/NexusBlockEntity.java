@@ -240,7 +240,7 @@ public final class NexusBlockEntity extends BlockEntity {
         if (wave >= 15 && roll < 0.10) return ModEntities.IM_GIANT_BIRD.get();
         if (wave >= 12 && roll < 0.18) return ModEntities.IM_BIRD.get();
         if (wave >= 10 && roll < 0.26) return ModEntities.IM_BURROWER.get();
-        if (wave >= 8  && roll < 0.34) return ModEntities.IM_PIG_ENGY.get();
+        if (wave >= 8  && roll < 0.34) return ModEntities.IM_PIGMAN_ENGINEER.get();
         if (wave >= 8  && roll < 0.42) return ModEntities.IM_ZOMBIE_PIGMAN.get();
         if (wave >= 5  && roll < 0.55) return ModEntities.IM_THROWER.get();
         if (wave >= 3  && roll < 0.66) return ModEntities.IM_SPIDER.get();
