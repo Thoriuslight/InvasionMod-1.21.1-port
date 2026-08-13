@@ -1,6 +1,5 @@
 package invmod.menu;
 
-import invmod.ModMenus;
 import invmod.block.entity.NexusBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -28,19 +27,14 @@ public class NexusMenu extends AbstractContainerMenu {
     public static final int DATA_RADIUS   = 4;
     private static final int DATA_SIZE    = 5;
 
-    private final ContainerData data;
-    private final @Nullable BlockPos nexusPos;
+   // private final ContainerData data;
+    //private final @Nullable BlockPos nexusPos;
 
     /** Client-side ctor invoked by NeoForge's menu opener. */
-    public NexusMenu(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
-        this(id, inv, buf.readBlockPos(), new SimpleContainerData(DATA_SIZE));
-    }
-
-    /** Server-side ctor opened from NexusBlock. */
-    public NexusMenu(int id, Inventory inv, BlockPos pos, ContainerData data) {
-        super(ModMenus.NEXUS.get(), id);
-        this.nexusPos = pos;
-        this.data = data;
+    public NexusMenu(int id, Inventory inv, BlockEntity blockentity) {
+        super(ModMenuTypes.NEXUS_MENU.get(), id);
+        //this.nexusPos = pos;
+        //this.data = data;
         addDataSlots(data);
     }
 

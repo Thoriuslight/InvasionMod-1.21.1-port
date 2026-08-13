@@ -8,6 +8,7 @@ import invmod.client.model.IMThrowerModel;
 import invmod.client.model.IMVultureModel;
 import invmod.client.render.IMCustomRenderers;
 import invmod.client.render.IMRenderers;
+import invmod.menu.ModMenuTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -28,7 +29,7 @@ public final class InvasionModClient {
 
     @SubscribeEvent
     static void registerMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
-        event.register(invmod.ModMenus.NEXUS.get(), invmod.client.screen.NexusScreen::new);
+        event.register(ModMenuTypes.NEXUS_MENU.get(), invmod.client.screen.NexusScreen::new);
     }
 
     @SubscribeEvent

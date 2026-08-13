@@ -1,6 +1,7 @@
 package invmod;
 
 import invmod.block.ModBlocks;
+import invmod.block.entity.ModBlockEntities;
 import invmod.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 
@@ -9,9 +10,7 @@ public final class ModRegistry {
 
     static void bootstrap() {
         // Force class-init of every per-domain registrar so its DeferredHolders attach.
-        ModBlockEntities.touch();
         ModEntities.touch();
-        ModMenus.touch();
     }
 
     public static void populateCreativeTab(CreativeModeTab.Output output) {
