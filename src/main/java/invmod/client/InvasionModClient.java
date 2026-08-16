@@ -16,11 +16,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(value = InvasionMod.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = InvasionMod.MODID, value = Dist.CLIENT)
 public final class InvasionModClient {
-    public InvasionModClient(ModContainer container) {}
+    public InvasionModClient(ModContainer container) {
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    }
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {

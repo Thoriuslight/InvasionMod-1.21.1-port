@@ -6,10 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import invmod.InvasionMod;
+import invmod.ModEntities;
+import invmod.entity.IMZombieEntity;
+import invmod.nexus.Combatant;
 import invmod.nexus.EntityConstruct;
 import invmod.nexus.NexusAccess;
 import invmod.nexus.wave.Wave;
+import invmod.nexus.wave.WaveBuilder;
+import invmod.nexus.wave.WaveSpawnerException;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.InclusiveRange;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.Nullable;
@@ -169,13 +181,13 @@ public class IMWaveSpawner implements Spawner {
                 final byte statusAddDeathParticles = (byte)60;
                 spawnPoint.applyTo(entity.asEntity());
                 entity.resetHealth();
-                entity.asEntity().getWorld().sendEntityStatus(entity.asEntity(), statusAddDeathParticles);
+                entity.asEntity().level().broadcastEntityEvent(entity.asEntity(), statusAddDeathParticles);
             }
         }
     }
 
     @Override
-    public void sendSpawnAlert(String message, Formatting color) {
+    public void sendSpawnAlert(String message, ChatFormatting color) {
         if (debugMode) {
             InvasionMod.LOGGER.info(message);
         }
@@ -191,7 +203,7 @@ public class IMWaveSpawner implements Spawner {
     }
 
     @Override
-    public int getNumberOfPointsInRange(IntRange angle, SpawnType type) {
+    public int getNumberOfPointsInRange(InclusiveRange<Integer> angle, SpawnType type) {
         return spawnPointContainer.getNumberOfSpawnPoints(type, angle);
     }
 
@@ -204,7 +216,7 @@ public class IMWaveSpawner implements Spawner {
     }
 
     @Override
-    public boolean attemptSpawn(EntityConstruct mobConstruct, IntRange angle) {
+    public boolean attemptSpawn(EntityConstruct mobConstruct, InclusiveRange<Integer> angle) {
         if (!permitSpawns) {
             return false;
         }
@@ -214,7 +226,7 @@ public class IMWaveSpawner implements Spawner {
 
         for (int j = 0; j < spawnTries; j++) {
             @Nullable
-            final SpawnPoint spawnPoint = angle.max().orElse(EntityPattern.MAX_VALID_ANGLE) - angle.min().orElse(EntityPattern.MAX_ANGLE) >= 360
+            final SpawnPoint spawnPoint = angle.maxInclusive() - angle.minInclusive() >= 360
                     ? spawnPointContainer.getRandomSpawnPoint(SpawnType.HUMANOID)
                     : spawnPointContainer.getRandomSpawnPoint(SpawnType.HUMANOID, angle);
 
@@ -230,7 +242,7 @@ public class IMWaveSpawner implements Spawner {
                 return true;
             }
 
-            if (spawnPoint.trySpawnEntity((ServerWorld)nexus.getWorld(), mob)) {
+            if (spawnPoint.trySpawnEntity((ServerLevel)nexus.getWorld(), mob)) {
                 successfulSpawns++;
                 if (debugMode) {
                     InvasionMod.LOGGER.info("[Spawn] Time: " + currentWave.getTimeInWave() / 1000 + "  Type: " + mob + "  Coords: " + mob.getX() + ", " + mob.getY() + ", " + mob.getZ() + "  θ" + spawnPoint.getAngle() + "  Specified: " + angle);
@@ -244,14 +256,14 @@ public class IMWaveSpawner implements Spawner {
     }
 
     private void generateSpawnPoints() {
-        EntityIMZombie zombie = InvEntities.ZOMBIE.create(nexus.getWorld());
-        zombie.setNexus(nexus);
+        IMZombieEntity zombie = ModEntities.IM_ZOMBIE.get().create(nexus.getWorld());
+        //zombie.setNexus(nexus);
         List<SpawnPoint> spawnPoints = new ArrayList<>();
         BlockPos origin = nexus.getOrigin();
-        BlockPos.Mutable mutable = origin.mutableCopy();
+        BlockPos.MutableBlockPos mutable = origin.mutable();
 
         for (int vertical = 0;
-             Math.abs(vertical) < spawnRadius && !nexus.getWorld().isOutOfHeightLimit(origin.getY() + vertical);
+             Math.abs(vertical) < spawnRadius && !nexus.getWorld().isOutsideBuildHeight(origin.getY() + vertical);
              vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1) {
             for (int i = 0; i <= spawnRadius * 0.7D + 1; i++) {
                 int j = (int) Math.round(spawnRadius * Math.cos(Math.asin(i / spawnRadius)));
@@ -292,26 +304,26 @@ public class IMWaveSpawner implements Spawner {
         InvasionMod.LOGGER.info("Found {} spawn points for next nexus wave", spawnPointContainer.getNumberOfSpawnPoints(SpawnType.HUMANOID));
     }
 
-    private void addValidSpawn(MobEntity entity, List<SpawnPoint> spawnPoints, BlockPos pos) {
-        if (nexus.getWorld().isOutOfHeightLimit(pos)) {
+    private void addValidSpawn(Mob entity, List<SpawnPoint> spawnPoints, BlockPos pos) {
+        if (nexus.getWorld().isOutsideBuildHeight(pos)) {
             InvasionMod.LOGGER.info("[Spawn] Spawn point was outside of build limit {}", pos);
             return;
         }
-        entity.updatePositionAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0);
-        if (entity.canSpawn(nexus.getWorld()) && nexus.getWorld().isSpaceEmpty(entity)) {
-            int angle = (int) (Math.atan2(nexus.getOrigin().getZ() - pos.getZ(), nexus.getOrigin().getX() - pos.getX()) * MathHelper.DEGREES_PER_RADIAN);
-            spawnPoints.add(new SpawnPoint(pos.toImmutable(), angle, SpawnType.HUMANOID));
+        entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0);
+        if (entity.checkSpawnObstruction(nexus.getWorld()) && nexus.getWorld().isUnobstructed(entity)) {
+            int angle = (int) (Math.atan2(nexus.getOrigin().getZ() - pos.getZ(), nexus.getOrigin().getX() - pos.getX()) * Mth.RAD_TO_DEG);
+            spawnPoints.add(new SpawnPoint(pos.immutable(), angle, SpawnType.HUMANOID));
         }
     }
 
-    public void readNbt(NbtCompound compound, RegistryWrapper.WrapperLookup lookup) {
-        setRadius(compound.getInt("spawnRadius"));
-        elapsed = compound.getLong("elapsed");
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        setRadius(tag.getInt("spawnRadius"));
+        elapsed = tag.getLong("elapsed");
     }
 
-    public NbtCompound writeNbt(NbtCompound compound, RegistryWrapper.WrapperLookup lookup) {
-        compound.putInt("spawnRadius", spawnRadius);
-        compound.putLong("elapsed", elapsed);
-        return compound;
+    public CompoundTag saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        tag.putInt("spawnRadius", spawnRadius);
+        tag.putLong("elapsed", elapsed);
+        return tag;
     }
 }

@@ -1,83 +1,79 @@
 package invmod.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import invmod.InvasionMod;
 import invmod.menu.NexusMenu;
 import invmod.net.NexusActionPayload;
+import invmod.nexus.Mode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /** Buttons-only Nexus control panel: shows live state from {@link NexusMenu}
  *  data slots and dispatches {@link NexusActionPayload} on click. */
 public class NexusScreen extends AbstractContainerScreen<NexusMenu> {
+    private static final ResourceLocation BACKGROUND = InvasionMod.id("textures/gui/nexus.png");
 
-    public NexusScreen(NexusMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-        this.imageWidth = 176;
-        this.imageHeight = 140;
-        this.inventoryLabelY = this.imageHeight - 100;
+    public NexusScreen(NexusMenu container, Inventory inventory, Component title) {
+        super(container, inventory, title);
     }
 
     @Override
-    protected void init() {
-        super.init();
-        int x = (this.width - this.imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
-
-        this.addRenderableWidget(Button.builder(Component.literal("Begin Wave"),
-                        b -> sendAction(NexusActionPayload.ACTION_BEGIN))
-                .pos(x + 20, y + 50).size(60, 20).build());
-        this.addRenderableWidget(Button.builder(Component.literal("End"),
-                        b -> sendAction(NexusActionPayload.ACTION_END))
-                .pos(x + 90, y + 50).size(60, 20).build());
-        this.addRenderableWidget(Button.builder(Component.literal("Cycle Radius"),
-                        b -> sendAction(NexusActionPayload.ACTION_RADIUS))
-                .pos(x + 35, y + 80).size(100, 20).build());
-    }
-
-    private void sendAction(int action) {
-        if (this.menu.getNexusPos() == null) return;
-        PacketDistributor.sendToServer(new NexusActionPayload(this.menu.getNexusPos(), action));
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
-        int x = (this.width - this.imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
-        g.fill(x, y, x + this.imageWidth, y + this.imageHeight, 0xCC101418);
-        g.fill(x, y, x + this.imageWidth, y + 1, 0xFF6B2BFF);
-        g.fill(x, y + this.imageHeight - 1, x + this.imageWidth, y + this.imageHeight, 0xFF6B2BFF);
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, playerInventoryTitle, titleLabelX, titleLabelY, 0x404040, false);
+        guiGraphics.drawString(this.font, "Nexus - Level " + menu.getLevel(), 46, 6, 0x404040, false);
+        guiGraphics.drawString(this.font, menu.getKills() + " mobs killed", 96, 60, 0x404040, false);
+        guiGraphics.drawString(this.font, "R: " + menu.getSpawnRadius(), 142, 72, 0x404040, false);
+
+        if (menu.getMode() == Mode.STARTED || menu.getMode() == Mode.WAITING) {
+            guiGraphics.drawString(this.font, "Activated!", 13, 62, 4210752, false);
+            guiGraphics.drawString(this.font, "Wave " + menu.getCurrentWave(), 55, 37, 0x404040, false);
+        } else if (menu.getMode() == Mode.CONTINUOUS) {
+            guiGraphics.drawString(this.font, "Power:", 56, 31, 4210752, false);
+            guiGraphics.drawString(this.font, "" + menu.getPowerLevel(), 61, 44, 0x404040, false);
+        }
+
+        if (menu.isActivating() && menu.getMode() == Mode.STOPPED) {
+            guiGraphics.drawString(this.font, "Activating...", 13, 62, 0x404040, false);
+            if (menu.getMode() != Mode.STABLE) {
+                guiGraphics.drawString(this.font, "Are you sure?", 8, 72, 0x404040, false);
+            }
+        }
     }
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(g, mouseX, mouseY, partialTick);
-        super.render(g, mouseX, mouseY, partialTick);
-        this.renderTooltip(g, mouseX, mouseY);
-    }
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+        int j = (width - imageWidth) / 2;
+        int k = (height - imageHeight) / 2;
+        guiGraphics.blit(BACKGROUND, j, k, 0, 0, imageWidth, imageHeight);
 
-    @Override
-    protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
-        int color = 0xFFC0C8FF;
-        g.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, color, false);
-        int y = this.titleLabelY + 14;
-        g.drawString(this.font, "Mode: " + modeName(menu.getMode()), 8, y, color, false);
-        g.drawString(this.font, "Wave: " + menu.getWaveNumber(), 8, y + 12, color, false);
-        g.drawString(this.font, "Mobs: " + menu.getSpawned() + " / " + menu.getTarget(),
-                8, y + 24, color, false);
-        g.drawString(this.font, "Radius: " + menu.getRadius(), 8, y + 36, color, false);
-    }
+        int l = menu.getGenerationProgressScaled(26);
+        guiGraphics.blit(BACKGROUND, j + 126, k + 28 + 26 - l, 185, 26 - l, 9, l);
+        guiGraphics.blit(BACKGROUND, j + 31, k + 51, 204, 0, menu.getCookProgressScaled(18), 2);
 
-    private static String modeName(int m) {
-        return switch (m) {
-            case 0 -> "Idle";
-            case 1 -> "Spawning";
-            case 2 -> "Await-Clear";
-            case 3 -> "Cooldown";
-            default -> "?";
-        };
+        if (menu.getMode() == Mode.STARTED || menu.getMode() == Mode.WAITING) {
+            guiGraphics.blit(BACKGROUND, j + 19, k + 29, 176, 0, 9, 31);
+            guiGraphics.blit(BACKGROUND, j + 19, k + 19, 194, 0, 9, 9);
+        } else if (menu.getMode() == Mode.CONTINUOUS) {
+            guiGraphics.blit(BACKGROUND, j + 19, k + 29, 176, 31, 9, 31);
+        }
+
+        if ((menu.getMode() == Mode.STOPPED || menu.getMode() == Mode.CONTINUOUS) && menu.isActivating()) {
+            l = menu.getActivationProgressScaled(31);
+            guiGraphics.blit(BACKGROUND, j + 19, k + 29 + 31 - l, 176, 31 - l, 9, l);
+        } else if (menu.getMode() == Mode.STABLE && menu.isActivating()) {
+            l = menu.getActivationProgressScaled(31);
+            guiGraphics.blit(BACKGROUND, j + 19, k + 29 + 31 - l, 176, 62 - l, 9, l);
+        }
     }
 }

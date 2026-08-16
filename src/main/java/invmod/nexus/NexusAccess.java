@@ -3,8 +3,7 @@ package invmod.nexus;
 import java.util.List;
 import java.util.UUID;
 
-
-//import com.invasion.nexus.ai.AttackerAI;
+import invmod.nexus.ai.AttackerAI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,15 +37,15 @@ public interface NexusAccess {
 
     Level getWorld();
 
-    //AttackerAI getAttackerAI();
+    AttackerAI getAttackerAI();
 
-    //Participants getParticipants();
+    Participants getParticipants();
 
     boolean isActive();
 
     List<Component> getStatus();
 
-    //void notifyCombatantRemoved(Combatant<?> combatant, Entity.RemovalReason reason);
+    void notifyCombatantRemoved(Combatant<?> combatant, Entity.RemovalReason reason);
 
     void damage(DamageSource source, int amount);
 }

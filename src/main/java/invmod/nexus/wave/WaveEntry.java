@@ -6,10 +6,7 @@ import invmod.nexus.spawns.SpawnType;
 import invmod.nexus.spawns.Spawner;
 import invmod.nexus.wave.pool.Select;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Style;
 import net.minecraft.util.InclusiveRange;
-//import net.minecraft.util.Util;
-// net.minecraft.util.math.random.Random;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,7 +137,7 @@ public class WaveEntry {
         @Nullable
         String message = alerts.remove(nextAlert);
         if (message != null) {
-            spawner.sendSpawnAlert(message, Style.EMPTY.withColor(ChatFormatting.RED));
+            spawner.sendSpawnAlert(message, ChatFormatting.RED);
         }
         nextAlert = DEFAULT_NEXT_ALERT_TIME;
         if (alerts.size() > 0) {
