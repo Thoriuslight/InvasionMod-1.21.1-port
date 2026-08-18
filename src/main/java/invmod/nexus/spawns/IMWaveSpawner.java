@@ -241,9 +241,9 @@ public class IMWaveSpawner implements Spawner {
 
                 return true;
             }
-
             if (spawnPoint.trySpawnEntity((ServerLevel)nexus.getWorld(), mob)) {
                 successfulSpawns++;
+                System.out.println(successfulSpawns);
                 if (debugMode) {
                     InvasionMod.LOGGER.info("[Spawn] Time: " + currentWave.getTimeInWave() / 1000 + "  Type: " + mob + "  Coords: " + mob.getX() + ", " + mob.getY() + ", " + mob.getZ() + "  θ" + spawnPoint.getAngle() + "  Specified: " + angle);
                 }
@@ -263,11 +263,14 @@ public class IMWaveSpawner implements Spawner {
         BlockPos.MutableBlockPos mutable = origin.mutable();
 
         for (int vertical = 0;
-             Math.abs(vertical) < spawnRadius && !nexus.getWorld().isOutsideBuildHeight(origin.getY() + vertical);
+             Math.abs(vertical) < spawnRadius && !nexus.getWorld().isOutsideBuildHeight(origin.getY() + vertical - 1);
              vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1) {
             for (int i = 0; i <= spawnRadius * 0.7D + 1; i++) {
                 int j = (int) Math.round(spawnRadius * Math.cos(Math.asin(i / spawnRadius)));
-
+                System.out.println("vertical");
+                System.out.println(vertical);
+                System.out.println(mutable.getY());
+                System.out.println(mutable.set(origin).move( i, vertical, j).getY());
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move( i, vertical, j));
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move( i, vertical,-j));
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move(-i, vertical, j));

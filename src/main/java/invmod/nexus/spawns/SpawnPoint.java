@@ -25,13 +25,18 @@ public record SpawnPoint(BlockPos pos, int angle, SpawnType type) implements Pol
             return false;
         }
         applyTo(entity);
-        return entity.checkSpawnObstruction(level) && level.isUnobstructed(entity);
+        return entity.checkSpawnObstruction(level) && level.noCollision(entity);
     }
 
     public boolean trySpawnEntity(ServerLevel level, Mob entity) {
+        System.out.println(entity.getOnPos().toString());
         if (isValidFor(level, entity)) {
+            System.out.println(entity.getOnPos().toString());
             entity.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.getOnPos()), MobSpawnType.STRUCTURE, null);
-            level.tryAddFreshEntityWithPassengers(entity);
+            System.out.println("spawnattempt");
+            System.out.println(entity.getOnPos().toString());
+            System.out.println(entity.getName().getString());
+            level.addFreshEntityWithPassengers(entity);
             return true;
         }
         return false;

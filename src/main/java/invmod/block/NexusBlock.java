@@ -81,7 +81,8 @@ public final class NexusBlock extends BaseEntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide() && !stack.is(ModItems.MATERIAL_PROBE.get()) && !stack.is(ModItems.NEXUS_ADJUSTER.get()) && !stack.is(ModItems.DEBUG_WAND.get())) {
-            ((ServerPlayer) player).openMenu(new SimpleMenuProvider(NexusBlockEntity, Component.literal("Nexus")), pos);
+            if(level.getBlockEntity(pos) instanceof NexusBlockEntity nexus)
+            ((ServerPlayer) player).openMenu(new SimpleMenuProvider(nexus, Component.literal("Nexus")), pos);
             return ItemInteractionResult.SUCCESS;
         }
 

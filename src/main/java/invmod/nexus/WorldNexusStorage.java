@@ -29,7 +29,7 @@ public class WorldNexusStorage extends SavedData {
     }
 
     public static WorldNexusStorage of(ServerLevel level) {
-        return level.getDataStorage().get(getType(level), ID.toLanguageKey());
+        return level.getDataStorage().computeIfAbsent(getType(level), ID.toLanguageKey());
     }
 
     private final ServerLevel level;
@@ -58,7 +58,7 @@ public class WorldNexusStorage extends SavedData {
     }
 
     public synchronized void tick() {
-        cleanupTimer = (cleanupTimer + 1) % 40;
+       cleanupTimer = (cleanupTimer + 1) % 40;
         instances.values().removeIf(nexus -> {
             if (tickCleanup(nexus)) {
                 return true;

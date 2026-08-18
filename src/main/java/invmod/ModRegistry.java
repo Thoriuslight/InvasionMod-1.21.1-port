@@ -40,7 +40,7 @@ public final class ModRegistry {
         output.accept(ModItems.STABLE_CATALYST_MIXTURE);
         output.accept(ModItems.NEXUS_CATALYST);
         output.accept(ModItems.STABLE_NEXUS_CATALYST);
-        output.accept(ModItems.STRONG_CATALYST);
+        output.accept(ModItems.STRONG_NEXUS_CATALYST);
         output.accept(ModItems.DAMPING_AGENT);
         output.accept(ModItems.STRONG_DAMPING_AGENT);
         // Tools / weapons

@@ -34,12 +34,12 @@ public record NexusActionPayload(BlockPos pos, int action) implements CustomPack
             BlockEntity be = level.getBlockEntity(msg.pos);
             if (!(be instanceof NexusBlockEntity nexus)) return;
             if (player.distanceToSqr(msg.pos.getX() + 0.5, msg.pos.getY() + 0.5, msg.pos.getZ() + 0.5) > 64.0) return;
-            switch (msg.action) {
-                case ACTION_BEGIN  -> { nexus.bindPlayer(player); nexus.startWave(player, level); }
-                case ACTION_END    -> nexus.stopWave(level);
-                case ACTION_RADIUS -> nexus.cycleSpawnRadius();
-                default -> {}
-            }
+           // switch (msg.action) {
+            //    case ACTION_BEGIN  -> { nexus.bindPlayer(player); nexus.startWave(player, level); }
+            //    case ACTION_END    -> nexus.stopWave(level);
+           //     case ACTION_RADIUS -> nexus.cycleSpawnRadius();
+            //    default -> {}
+            //}
         });
     }
 }

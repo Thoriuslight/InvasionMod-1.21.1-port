@@ -1,5 +1,6 @@
 package invmod.nexus.ai;
 
+import invmod.nexus.ai.scaffold.ScaffoldView;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -52,7 +53,7 @@ class TerrainDataLayerChunk implements ScaffoldView, BlockGetter {
     }
 
     @Override
-    public int getBottomY() {
+    public int getMinBuildHeight() {
         return world.getMinBuildHeight();
     }
 }

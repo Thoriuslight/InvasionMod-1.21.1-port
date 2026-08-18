@@ -70,6 +70,7 @@ public class WaveEntry {
         }
 
         if (toNextSpawn <= 0) {
+            System.out.println("check1");
             elapsed += granularity;
             toNextSpawn += granularity;
             if (toNextSpawn < 0) {
@@ -97,11 +98,13 @@ public class WaveEntry {
                 }
             }
         }
-
         if (!spawnList.isEmpty()) {
+            System.out.println("check3");
             int numberOfSpawns = 0;
             if (spawner.getNumberOfPointsInRange(angle, SpawnType.HUMANOID) >= minPointsInRange) {
+                System.out.println("check4");
                 for (int i = spawnList.size() - 1; i >= 0; i--) {
+                    System.out.println("attempt");
                     if (spawner.attemptSpawn(spawnList.get(i), angle)) {
                         numberOfSpawns++;
                         spawnList.remove(i);

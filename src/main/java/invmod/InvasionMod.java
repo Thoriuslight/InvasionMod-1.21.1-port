@@ -6,8 +6,10 @@ import invmod.block.entity.ModBlockEntities;
 import invmod.menu.ModMenuTypes;
 import invmod.item.ModCreativeModeTabs;
 import invmod.item.ModItems;
+import invmod.nexus.WorldNexusStorage;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +19,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
@@ -36,6 +39,7 @@ public final class InvasionMod {
         LOGGER.info("Invasion Mod port skeleton loading");
 
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.addListener(InvasionMod::levelTickEvent);
         container.registerConfig(ModConfig.Type.COMMON, InvasionConfig.CONFIG_SPEC);
 
         ModCreativeModeTabs.register(modBus);
@@ -54,5 +58,14 @@ public final class InvasionMod {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+
+    }
+
+    private static void levelTickEvent(LevelTickEvent.Pre event) {
+        if(!event.getLevel().isClientSide){
+            BountyHunter.of((ServerLevel)event.getLevel()).tick();
+            WorldNexusStorage.of((ServerLevel)event.getLevel()).tick();
+        }
+
     }
 }

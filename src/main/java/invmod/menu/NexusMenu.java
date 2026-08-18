@@ -4,6 +4,7 @@ import invmod.block.ModBlocks;
 import invmod.block.entity.NexusBlockEntity;
 import invmod.nexus.Mode;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -19,7 +20,7 @@ public class NexusMenu extends AbstractContainerMenu {
     private final ContainerData properties;
     private final ContainerLevelAccess context;
 
-    public NexusMenu(int syncId, Inventory inventory) {
+    public NexusMenu(int syncId, Inventory inventory, FriendlyByteBuf extraData) {
         this(syncId, inventory, new SimpleContainer(2), new SimpleContainerData(10), ContainerLevelAccess.NULL);
     }
 

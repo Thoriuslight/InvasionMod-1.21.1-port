@@ -39,12 +39,12 @@ public class ProbeItem extends Item {
         if(state.getBlock() instanceof NexusBlock) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof NexusBlockEntity nexus) {
-                int newRange = nexus.getSpawnRadius();
+                //int newRange = nexus.getSpawnRadius();
 
                 // check if the player wants to increase or decrease the range
-                newRange += player.isCrouching() ? -8 : 8;
+                //newRange += player.isCrouching() ? -8 : 8;
                 // TODO: this check should be handled by the block entity, not here
-                newRange = Mth.clamp(newRange, 32, 128);
+               // newRange = Mth.clamp(newRange, 32, 128);
 
                 //if (nexus.setSpawnRadius(newRange)) {
                 //    player.sendMessage(Text.translatable("invmod.message.probe.rangechanged", Text.literal(nexus.getSpawnRadius() + "").formatted(Formatting.GREEN)).formatted(Formatting.DARK_GREEN));

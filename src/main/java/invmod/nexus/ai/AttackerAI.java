@@ -4,6 +4,7 @@ package invmod.nexus.ai;
 import invmod.block.entity.NexusBlockEntity;
 import invmod.nexus.Combatant;
 import invmod.nexus.Nexus;
+import invmod.nexus.ai.scaffold.Scaffold;
 import invmod.nexus.ai.scaffold.ScaffoldList;
 import invmod.nexus.ai.scaffold.ScaffoldView;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -62,7 +63,7 @@ public class AttackerAI {
         return new TerrainDataLayer(terrainMap, entityDensityData);
     }
 
-    public CollisionView addScaffoldDataTo(CollisionView view) {
+    public CollisionGetter addScaffoldDataTo(CollisionGetter view) {
         ScaffoldView terrainMap = ScaffoldView.of(view);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         for (Scaffold scaffold : scaffolds) {
@@ -79,12 +80,12 @@ public class AttackerAI {
             callback.accept(Optional.empty());
         } else {
             nextScaffoldCalcTimer = 200;
-            boolean success = scaffolds.addAll(nexus, new ScaffoldGenerator(this).generateScaffolds(entity));
-            if (success) {
-                callback.accept(scaffolds.getNearest(entity.getBlockPos()));
-            } else {
-                callback.accept(Optional.empty());
-            }
+            //boolean success = scaffolds.addAll(nexus, new ScaffoldGenerator(this).generateScaffolds(entity));
+            //if (success) {
+            //    callback.accept(scaffolds.getNearest(entity.getBlockPos()));
+            //} else {
+            //    callback.accept(Optional.empty());
+            //}
         }
     }
 
@@ -97,9 +98,9 @@ public class AttackerAI {
     }
 
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries)  {
-        scaffolds.load(tag,.getList("scaffolds", ListTag.TAG_COMPOUND)
+        scaffolds.load(tag.getList("scaffolds", ListTag.TAG_COMPOUND)
                 .stream()
-                .map(element -> new Scaffold((NbtCompound) element, nexus))
+                .map(element -> new Scaffold((CompoundTag) element, nexus))
                 .toList()
         );
     }
@@ -107,7 +108,7 @@ public class AttackerAI {
     public CompoundTag saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         ListTag nbttaglist = new ListTag();
         for (Scaffold scaffold : scaffolds) {
-            nbttaglist.add(scaffold.toNBT(new NbtCompound()));
+            nbttaglist.add(scaffold.toNBT(new CompoundTag()));
         }
         tag.put("scaffolds", nbttaglist);
         return tag;

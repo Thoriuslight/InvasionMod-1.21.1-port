@@ -28,7 +28,7 @@ public class ScaffoldList implements Iterable<Scaffold> {
     public Optional<BlockPos> getNearest(BlockPos pos) {
         return entries.stream()
                 .map(i -> i.getNode().pos())
-                .sorted(Comparator.comparing(pos::getSquaredDistance))
+                .sorted(Comparator.comparing(pos::distManhattan))
                 .findFirst();
     }
 
@@ -42,7 +42,7 @@ public class ScaffoldList implements Iterable<Scaffold> {
 
     public void tick(Level level) {
         entries.removeIf(scaffold -> {
-            Vec3 pos = scaffold.getNode().pos().toCenterPos();
+            Vec3 pos = scaffold.getNode().pos().getCenter();
             level.addParticle(ParticleTypes.HEART, pos.x, pos.y, pos.z, 0.5D, 0.5D, 0.5D);
 
             return scaffold.updateStatus();

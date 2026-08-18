@@ -1,26 +1,16 @@
 package invmod.block.entity;
 
-import invmod.InvasionMod;
-import invmod.ModEntities;
-import invmod.block.NexusBlock;
 import invmod.menu.NexusMenu;
 import invmod.nexus.Nexus;
 import invmod.nexus.NexusAccess;
 import invmod.nexus.WorldNexusStorage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -31,12 +21,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public final class NexusBlockEntity extends BlockEntity implements Container, MenuProvider {
-    private static final int[] SLOTS = {0, 1};
+    //private static final int[] SLOTS = {0, 1};
 
     private UUID nexusId = UUID.randomUUID();
     @Nullable

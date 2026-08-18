@@ -138,7 +138,7 @@ public class Nexus implements ControllableNexusAccess {
 
         @Override
         public int getCount() {
-            return 9;
+            return 10;
         }
     };
 
@@ -392,12 +392,14 @@ public class Nexus implements ControllableNexusAccess {
             boundPlayers.bindPlayers(boundingBoxToRadius);
             regenerateHealth();
             waveDelayTimer = -1L;
+            System.out.println(boundPlayers.getParticipantsList().getContents().toString());
             boundPlayers.sendMessage(boundPlayers.getParticipantsList());
             boundPlayers.sendWarning("invmod.message.nexus.firstwavesoon");
             //boundPlayers.playSoundForBoundPlayers(InvSounds.BLOCK_NEXUS_RUMBLE);
             activated = true;
             return true;
         } catch (WaveSpawnerException e) {
+            System.out.println("error");
             stop(false);
             InvasionMod.LOGGER.info(e.getMessage());
             boundPlayers.sendNotice(e.getMessage());
@@ -543,6 +545,7 @@ public class Nexus implements ControllableNexusAccess {
     }
 
     public void tickInventory() {
+
         nexusItemStacks.tick(this);
 
         if (!storage.canActivate(this)) {

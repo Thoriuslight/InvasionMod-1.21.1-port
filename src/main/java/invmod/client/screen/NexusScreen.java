@@ -16,7 +16,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /** Buttons-only Nexus control panel: shows live state from {@link NexusMenu}
  *  data slots and dispatches {@link NexusActionPayload} on click. */
 public class NexusScreen extends AbstractContainerScreen<NexusMenu> {
-    private static final ResourceLocation BACKGROUND = InvasionMod.id("textures/gui/nexus.png");
+    private static final ResourceLocation BACKGROUND = InvasionMod.id("textures/gui/nexus_gui.png");
 
     public NexusScreen(NexusMenu container, Inventory inventory, Component title) {
         super(container, inventory, title);

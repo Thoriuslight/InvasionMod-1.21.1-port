@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public final class InvasionCommand {
-    private InvasionCommand() {}
+ /*   private InvasionCommand() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("invasion")
@@ -120,5 +120,5 @@ public final class InvasionCommand {
         }
         if (best == null) return null;
         return new NexusContext(level, best, (NexusBlockEntity) level.getBlockEntity(best));
-    }
+    }*/
 }

@@ -33,7 +33,7 @@ public final class ModEvents {
     public static final class GameBus {
         @SubscribeEvent
         public static void onRegisterCommands(RegisterCommandsEvent event) {
-            InvasionCommand.register(event.getDispatcher());
+            //InvasionCommand.register(event.getDispatcher());
         }
     }
 }

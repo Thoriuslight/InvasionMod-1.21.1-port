@@ -35,12 +35,11 @@ public final class ModItems {
     public static final DeferredItem<Item> RIFT_FLUX              = register("rift_flux",              single().rarity(Rarity.UNCOMMON));
     public static final DeferredItem<Item> NEXUS_CATALYST         = register("nexus_catalyst",         single());
     public static final DeferredItem<Item> STABLE_NEXUS_CATALYST  = register("stable_nexus_catalyst",  single());
-    public static final DeferredItem<Item> STRONG_NEXUS_CATALYST  = register("strong_nexus_catalyst",  single());
     public static final DeferredItem<Item> CATALYST_MIXTURE       = register("catalyst_mixture",       single());
     public static final DeferredItem<Item> STABLE_CATALYST_MIXTURE = register("stable_catalyst_mixture", single());
     public static final DeferredItem<Item> DAMPING_AGENT          = register("damping_agent",          single());
     public static final DeferredItem<Item> STRONG_DAMPING_AGENT   = register("strong_damping_agent",   single());
-    public static final DeferredItem<Item> STRONG_CATALYST        = register("strong_catalyst",        single());
+    public static final DeferredItem<Item> STRONG_NEXUS_CATALYST        = register("strong_nexus_catalyst",        single());
     public static final DeferredItem<Item> STRANGE_BONE           = register("strange_bone",           single());
     public static final DeferredItem<Item> SMALL_REMNANTS         = register("small_remnants",         stack().stacksTo(64));
 

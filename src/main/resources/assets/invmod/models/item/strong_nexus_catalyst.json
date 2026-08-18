@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "invmod:item/strong_catalyst"
+    "layer0": "invmod:item/strong_nexus_catalyst"
   }
 }

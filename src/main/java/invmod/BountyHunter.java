@@ -33,7 +33,7 @@ public class BountyHunter extends SavedData {
     }
 
     public static BountyHunter of(ServerLevel level) {
-        return level.getDataStorage().get(getType(level), ID.toLanguageKey());
+        return level.getDataStorage().computeIfAbsent(getType(level), ID.toLanguageKey());
     }
 
     private final List<UUID> players = new ArrayList<>();
