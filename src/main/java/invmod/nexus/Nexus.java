@@ -180,11 +180,11 @@ public class Nexus implements ControllableNexusAccess {
     }
 
     private AABB computeSpawnArea() {
-        return new AABB(pos).expandTowards(getSpawnRadius() + 10, getSpawnRadius() + 40, getSpawnRadius() + 10);
+        return new AABB(pos).inflate(getSpawnRadius() + 10, getSpawnRadius() + 40, getSpawnRadius() + 10);
     }
 
     private AABB getChunkBox(Level level) {
-        return new AABB(pos).expandTowards(getSpawnRadius() + 10, getSpawnRadius() + 40, getSpawnRadius() + 10).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
+        return new AABB(pos).inflate(getSpawnRadius() + 10, getSpawnRadius() + 40, getSpawnRadius() + 10).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
     }
 
     @Override
@@ -613,7 +613,7 @@ public class Nexus implements ControllableNexusAccess {
     }
 
     private int acquireEntities() {
-        List<PathfinderMob> entities = getWorld().getEntitiesOfClass(PathfinderMob.class, boundingBoxToRadius.expandTowards(10, 128, 10), Combatant.PREDICATE);
+        List<PathfinderMob> entities = getWorld().getEntitiesOfClass(PathfinderMob.class, boundingBoxToRadius.inflate(10, 128, 10), Combatant.PREDICATE);
         InvasionMod.LOGGER.info("Acquired " + entities.size() + " entities after state restore");
         return entities.size();
     }
