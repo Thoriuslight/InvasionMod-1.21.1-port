@@ -6,13 +6,12 @@ import invmod.nexus.spawns.SpawnType;
 import invmod.nexus.spawns.Spawner;
 import invmod.nexus.wave.pool.Select;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.util.InclusiveRange;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.Nullable;
 
 public class WaveEntry {
@@ -70,7 +69,6 @@ public class WaveEntry {
         }
 
         if (toNextSpawn <= 0) {
-            System.out.println("check1");
             elapsed += granularity;
             toNextSpawn += granularity;
             if (toNextSpawn < 0) {
@@ -99,12 +97,9 @@ public class WaveEntry {
             }
         }
         if (!spawnList.isEmpty()) {
-            System.out.println("check3");
             int numberOfSpawns = 0;
             if (spawner.getNumberOfPointsInRange(angle, SpawnType.HUMANOID) >= minPointsInRange) {
-                System.out.println("check4");
                 for (int i = spawnList.size() - 1; i >= 0; i--) {
-                    System.out.println("attempt");
                     if (spawner.attemptSpawn(spawnList.get(i), angle)) {
                         numberOfSpawns++;
                         spawnList.remove(i);
@@ -156,9 +151,9 @@ public class WaveEntry {
         int angleRange = clampAngle(angle.maxInclusive() - angle.minInclusive());
         List<Integer> validAngles = getAllowedAngles(spawner, angleRange);
         if (!validAngles.isEmpty()) {
-           // int min = Util.getRandom(validAngles, spawner.getRandom());
-           // int max = wrapAngle(min + angleRange);
-           // angle = new InclusiveRange<>(min, max);
+           int min = Util.getRandom(validAngles, spawner.getRandom());
+           int max = wrapAngle(min + angleRange);
+           angle = new InclusiveRange<>(min, max);
         }
 
         if (minPointsInRange > 1) {
@@ -238,7 +233,7 @@ public class WaveEntry {
         }
 
         public Builder<K> angle(int range) {
-            //this.minAngle = Random.create().nextInt(MAX_ANGLE) - MAX_VALID_ANGLE;
+            this.minAngle = RandomSource.create().nextInt(MAX_ANGLE) - MAX_VALID_ANGLE;
             this.maxAngle = wrapAngle(minAngle + range);
             return this;
         }
@@ -263,6 +258,12 @@ public class WaveEntry {
         }
 
         public WaveEntry build() {
+            //temp fix
+            //TO DO: implement better angle handler
+            if(maxAngle<minAngle){
+                maxAngle = MAX_VALID_ANGLE;
+            }
+
             return new WaveEntry(
                     new InclusiveRange<>(timeBegin, timeEnd),
                     new InclusiveRange<>(minAngle, maxAngle),

@@ -29,13 +29,8 @@ public record SpawnPoint(BlockPos pos, int angle, SpawnType type) implements Pol
     }
 
     public boolean trySpawnEntity(ServerLevel level, Mob entity) {
-        System.out.println(entity.getOnPos().toString());
         if (isValidFor(level, entity)) {
-            System.out.println(entity.getOnPos().toString());
             entity.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.getOnPos()), MobSpawnType.STRUCTURE, null);
-            System.out.println("spawnattempt");
-            System.out.println(entity.getOnPos().toString());
-            System.out.println(entity.getName().getString());
             level.addFreshEntityWithPassengers(entity);
             return true;
         }

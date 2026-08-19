@@ -64,6 +64,7 @@ public class SpawnPointContainer {
         if (start < 0) {
             start = -start - 1;
         }
+
         int end = Collections.binarySearch(spawnList, PolarAngle.of(maxAngle));
         if (end < 0) {
             end = -end - 1;

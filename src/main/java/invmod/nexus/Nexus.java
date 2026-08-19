@@ -399,7 +399,6 @@ public class Nexus implements ControllableNexusAccess {
             activated = true;
             return true;
         } catch (WaveSpawnerException e) {
-            System.out.println("error");
             stop(false);
             InvasionMod.LOGGER.info(e.getMessage());
             boundPlayers.sendNotice(e.getMessage());

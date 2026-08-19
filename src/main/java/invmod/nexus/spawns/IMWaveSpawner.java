@@ -243,7 +243,6 @@ public class IMWaveSpawner implements Spawner {
             }
             if (spawnPoint.trySpawnEntity((ServerLevel)nexus.getWorld(), mob)) {
                 successfulSpawns++;
-                System.out.println(successfulSpawns);
                 if (debugMode) {
                     InvasionMod.LOGGER.info("[Spawn] Time: " + currentWave.getTimeInWave() / 1000 + "  Type: " + mob + "  Coords: " + mob.getX() + ", " + mob.getY() + ", " + mob.getZ() + "  θ" + spawnPoint.getAngle() + "  Specified: " + angle);
                 }
@@ -267,10 +266,6 @@ public class IMWaveSpawner implements Spawner {
              vertical = vertical > 0 ? vertical * -1 : vertical * -1 + 1) {
             for (int i = 0; i <= spawnRadius * 0.7D + 1; i++) {
                 int j = (int) Math.round(spawnRadius * Math.cos(Math.asin(i / spawnRadius)));
-                System.out.println("vertical");
-                System.out.println(vertical);
-                System.out.println(mutable.getY());
-                System.out.println(mutable.set(origin).move( i, vertical, j).getY());
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move( i, vertical, j));
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move( i, vertical,-j));
                 addValidSpawn(zombie, spawnPoints, mutable.set(origin).move(-i, vertical, j));
@@ -313,7 +308,7 @@ public class IMWaveSpawner implements Spawner {
             return;
         }
         entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0);
-        if (entity.checkSpawnObstruction(nexus.getWorld()) && nexus.getWorld().isUnobstructed(entity)) {
+        if (entity.checkSpawnObstruction(nexus.getWorld()) && nexus.getWorld().noCollision(entity)) {
             int angle = (int) (Math.atan2(nexus.getOrigin().getZ() - pos.getZ(), nexus.getOrigin().getX() - pos.getX()) * Mth.RAD_TO_DEG);
             spawnPoints.add(new SpawnPoint(pos.immutable(), angle, SpawnType.HUMANOID));
         }
